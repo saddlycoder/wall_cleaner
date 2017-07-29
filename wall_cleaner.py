@@ -12,9 +12,12 @@ def main():
         return
 
     vk = vk_session.get_api()
-
-    wall = vk.wall.get(count=10)['items'] # где count, нужно указать кол-во удаляемых записей(макс.100)
-    for x in wall:
+    try:
+        wall = vk.wall.get(count=10)['items'] # где count, нужно указать кол-во удаляемых записей(макс.100)
+	except vk_api.VkApiError as err:
+	    print(err)
+		return
+    for(x in wall):
         vk.wall.delete(owner_id=402825767, post_id=x['id']) # где owner_id  id очищаемой страницы
 if __name__ == '__main__':
     main()
